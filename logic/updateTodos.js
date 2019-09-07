@@ -12,6 +12,8 @@ async function updateTodos(userName, password, todo) {
         await mongoose.connect(`mongodb://${url}/${db}`, { useNewUrlParser: true, useFindAndModify: false });
         if (!(await userExists(userName, password, true))) return `User Not Found. Cant't Update`;
         queryResult = await User.updateOne({ userName, password }, {  todos: todo });
+        if (queryResult.ok != 1) queryResult = "Internal Error";
+        else queryResult = 'Updated';
     } catch (error) {
         console.error(error);
     }

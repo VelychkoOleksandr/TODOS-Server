@@ -17,8 +17,10 @@ server.get('/', (req, res) => {
     res.end();
 });
 
-server.post('/register', (req, res) => {
-    res.send(`You're on register page`);
+server.post('/register', async (req, res) => {
+    const { userName, password } = JSON.parse(req.body.userData);
+    const queries = await registerUser(userName, password);
+    res.send(queries);
     res.end();
 });
 
@@ -29,8 +31,11 @@ server.post('/getTodosList', async (req, res) => {
     res.end();
 });
 
-server.post('/updateTodos', (req, res) => {
-    res.send(`You're on updateTodos page`);
+server.post('/updateTodos', async (req, res) => {
+    const { userName, password, todo } = JSON.parse(req.body.userData);
+    const queries = await updateTodos(userName, password, todo);
+    res.send(queries);
     res.end();
 });
+
 
